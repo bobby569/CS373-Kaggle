@@ -1,3 +1,6 @@
+def getInteger(s):
+    return int(getDecimal(s))
+
 def getDecimal(s, default=0.):
     return float(s) if s else default
 
@@ -16,7 +19,7 @@ def getCreditGrade(s):
     return 35 - (ord(s[0]) - 65) * 5 - int(s[1])
 
 def getStringHash(s):
-    return hash(s) % 10007
+    return hash(s) % 10000007
 
 def getFICOScore(s):
     return int(s[:3]) - 640 / 5 + 1 if s else 0
@@ -24,7 +27,7 @@ def getFICOScore(s):
 def getRatio(nu, de):
     nu = getDecimal(nu) + 1
     de = getDecimal(de) + 1
-    return nu / de
+    return round(nu / de)
 
 def getEducation(s):
     return 1 if s else 0

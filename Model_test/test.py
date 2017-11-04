@@ -1,13 +1,17 @@
 from Data import Data
 from preprocess import *
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
+from sklearn.naive_bayes import GaussianNB, BernoulliNB, MultinomialNB
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, \
+                            BaggingClassifier, ExtraTreesClassifier, \
+                            GradientBoostingClassifier, VotingClassifier
 from sklearn.neural_network import MLPClassifier
 
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.gaussian_process.kernels import RBF
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.linear_model import RidgeClassifier, RidgeClassifierCV, SGDClassifier
+from sklearn.neighbors import RadiusNeighborsClassifier, KNeighborsClassifier
+
 
 classifiers = [
     DecisionTreeClassifier(max_depth=10),    # 0
