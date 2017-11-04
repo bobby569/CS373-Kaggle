@@ -1,10 +1,1 @@
 DecisionTree7: 0.78672
-DecisionTree11:
-DecisionTree17:
-AdaBoost:
-GaussianNB:
-MLP_logistic_sgd:
-MLP_tanh_sgd:
-MLP_logistic:
-MLP_tanh:
-QuadraticDiscriminantAnalysis:
