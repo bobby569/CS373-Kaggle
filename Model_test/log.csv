@@ -1,1 +1,13 @@
+DecisionTreeClassifier:
+DecisionTreeClassifier(max_depth=10): 0.80425
+DecisionTreeClassifier(max_depth=10, criterion="entropy"): 0.8078625
+
+ExtraTreeClassifier:
+ExtraTreeClassifier(max_depth=13, criterion="entropy"): 0.682425
+
+NBC:
+BernoulliNB(alpha=5.5): 0.6552375
+
+
+
 
