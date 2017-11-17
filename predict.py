@@ -6,8 +6,6 @@ from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, \
                             BaggingClassifier, ExtraTreesClassifier, \
                             GradientBoostingClassifier
 from sklearn.linear_model import RidgeClassifier
-from sklearn.neighbors import RadiusNeighborsClassifier, KNeighborsClassifier
-
 from sklearn.neural_network import MLPClassifier
 
 classifiers = [

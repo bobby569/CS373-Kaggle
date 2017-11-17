@@ -7,8 +7,6 @@ from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, \
                             BaggingClassifier, ExtraTreesClassifier, \
                             GradientBoostingClassifier
 from sklearn.linear_model import RidgeClassifier
-from sklearn.neighbors import RadiusNeighborsClassifier, KNeighborsClassifier
-
 from sklearn.neural_network import MLPClassifier
 
 classifiers = [
@@ -24,19 +22,14 @@ classifiers = [
                          criterion="entropy"),                      # 0.78
     GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
                                max_depth=3, warm_start=True),       # 0.86
-    RidgeClassifier(),
-
-
-    MLPClassifier(),
-
-
+    RidgeClassifier(alpha=2)                                        # 0.73
 ]
 
 d = Data()
 d.readTrainData()
 
-c = classifiers[8]
-iteration = 1
+c = classifiers[9]
+iteration = 5
 
 total = 0
 for _ in range(iteration):
