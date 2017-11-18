@@ -14,12 +14,12 @@ classifiers = [
     RandomForestClassifier(max_depth=10, n_estimators=30,
                            warm_start=True, bootstrap=False,
                            criterion="entropy"),
-    BaggingClassifier(n_estimators=40, warm_start=True),
+    BaggingClassifier(n_estimators=35),
     GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
-                               max_depth=3, warm_start=True)
+                               max_depth=4, warm_start=True)
 ]
 
 trainData = Data()
 data = trainData.readTrainData()
 
-trainData.predict(classifiers[4], 'GradientBoosting', '0.4_110')
+trainData.predict(classifiers[4], 'GradientBoosting', '0.4_110_4')

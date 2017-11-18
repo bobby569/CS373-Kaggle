@@ -1,10 +1,9 @@
-def getInteger(s):
-    return int(getDecimal(s))
+import datetime
 
 def getDecimal(s, default=0.):
     return float(s) if s else default
 
-def getPercentage(s, default=0):
+def getPercentage(s, default=0.):
     return float(s[:-1]) if s else default
 
 def getLoanLen(s):
@@ -19,15 +18,25 @@ def getCreditGrade(s):
     return 35 - (ord(s[0]) - 65) * 5 - int(s[1])
 
 def getStringHash(s):
-    return hash(s) % 10000007
+    return hash(s) % 100000007
 
 def getFICOScore(s):
     return int(s[:3]) - 640 / 5 + 1 if s else 0
 
+def getCreditTime(s):
+    try:
+        t = datetime.datetime.strptime(s, '%m/%d/%y')
+        res = t.year
+        if t.month < 10:
+            res *= 10
+        return res + t.month
+    except:
+        return 190000
+
 def getRatio(nu, de):
-    nu = getDecimal(nu) + 1
-    de = getDecimal(de) + 1
-    return round(nu / de)
+    nu = getDecimal(nu) + 0.1
+    de = getDecimal(de) + 0.1
+    return nu / de  * 10 // 1 / 10
 
 def getEducation(s):
     return 1 if s else 0

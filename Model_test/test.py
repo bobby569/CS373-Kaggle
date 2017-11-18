@@ -10,25 +10,22 @@ from sklearn.linear_model import RidgeClassifier
 from sklearn.neural_network import MLPClassifier
 
 classifiers = [
-    DecisionTreeClassifier(max_depth=10, criterion="entropy"),      # 0.80
-    ExtraTreeClassifier(max_depth=13, criterion="entropy"),         # 0.69
-    BernoulliNB(alpha=5.5),                                         # 0.65
-    AdaBoostClassifier(learning_rate=1.2),                          # 0.79
+    DecisionTreeClassifier(max_depth=10, criterion="entropy"),      # 0.808
+    AdaBoostClassifier(learning_rate=1.2),                          # 0.786
     RandomForestClassifier(max_depth=10, n_estimators=30,
-                           warm_start=True, bootstrap=False,
-                           criterion="entropy"),                    # 0.83
-    BaggingClassifier(n_estimators=40, warm_start=True),            # 0.95
+                           bootstrap=True, criterion="entropy"),    # 0.798
+    BaggingClassifier(n_estimators=35),                             # 0.830
     ExtraTreesClassifier(max_depth=25, n_estimators=40,
-                         criterion="entropy"),                      # 0.78
+                         criterion="entropy"),                      # 0.782
     GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
-                               max_depth=3, warm_start=True),       # 0.86
-    RidgeClassifier(alpha=2)                                        # 0.73
+                               max_depth=4, warm_start=True),       # 0.960
+    RidgeClassifier(alpha=2)                                        # 0.733
 ]
 
 d = Data()
 d.readTrainData()
 
-c = classifiers[9]
+c = classifiers[5]
 iteration = 5
 
 total = 0
