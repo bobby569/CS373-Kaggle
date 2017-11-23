@@ -53,12 +53,12 @@ class Data:
 
         return d
 
-    def predict(self, classifier, name, i='0'):
+    def predict(self, classifier, name, para, i='0'):
         classifier.fit(self.attr, self.target)
 
         toPredictFile = open('./Loan_ToPredict.csv')
         reader = csv.DictReader(toPredictFile)
-        outputfile = open('./%s_%s.csv' % (name, i), 'w')
+        outputfile = open('./weight_result/%s_%s.csv' % (name, i), 'w')
         writer = csv.writer(outputfile, delimiter=',')
         writer.writerow(['Loan ID', 'Status (Fully Paid=1, Not Paid=0)'])
 
@@ -92,8 +92,8 @@ class Data:
                 getEducation(row['Education']),
                 getEmployeement(row['Employment Length']),
             ]])
-            res = classifier.predict(test)[0]
-            writer.writerow([row['Loan ID'], res])
+            res = classifier.predict(test)[0] * para
+            writer.writerow([row['Loan ID'], "%.3f" % res])
 
         outputfile.close()
         toPredictFile.close()
