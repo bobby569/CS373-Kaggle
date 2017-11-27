@@ -21,17 +21,16 @@ def getStringHash(s):
     return hash(s) % 100000007
 
 def getFICOScore(s):
-    return int(s[:3]) - 640 / 5 + 1 if s else 0
+    return (int(s[:3]) - 640) / 5 + 1 if s else 0
 
 def getCreditTime(s):
     try:
         t = datetime.datetime.strptime(s, '%m/%d/%y')
-        res = t.year
-        if t.month < 10:
-            res *= 10
-        return res + t.month
+        res = (t.year - 1950) * 12
+        res += (t.month - 12)
+        return res
     except:
-        return 190000
+        return 0
 
 def getRatio(nu, de):
     nu = getDecimal(nu) + 0.1

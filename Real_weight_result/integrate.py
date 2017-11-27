@@ -13,6 +13,10 @@ for i in xrange(len(filepath)):
     weights[i] = int(filepath[i][2:7]) / 100000.0
 threhold = np.sum(weights) / 2;
 
+# print np.sum(weights) / len(weights)
+#
+# exit()
+
 fileptr = map(open, filepath)
 for f in fileptr:
     f.readline()

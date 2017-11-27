@@ -5,23 +5,25 @@ from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, \
                             BaggingClassifier, ExtraTreesClassifier, \
                             GradientBoostingClassifier
 from sklearn.linear_model import RidgeClassifier
+from sklearn.ensemble import VotingClassifier
 
-classifiers = [
-    DecisionTreeClassifier(max_depth=10, criterion="entropy"),      # 0.802
-    RandomForestClassifier(max_depth=10, n_estimators=30,
-                           bootstrap=True, criterion="entropy"),    # 0.796
-    BaggingClassifier(n_estimators=35),                             # 0.823
-    GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
-                               max_depth=3),                        # 0.841
-    GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
-                               max_depth=4),                        # 0.841
-    GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
-                               max_depth=5),                        # 0.835
-    GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
-                               max_depth=6),                        # 0.832
-]
+clf1 = DecisionTreeClassifier(max_depth=10, criterion="entropy")
+clf2 = GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
+                           max_depth=4)
+clf3 = BaggingClassifier(n_estimators=35)
+clf4 = GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
+                           max_depth=3)
+clf5 = GradientBoostingClassifier(learning_rate=0.4, n_estimators=110,
+                           max_depth=5)
+clf6 = AdaBoostClassifier(base_estimator=DecisionTreeClassifier(max_depth=7, criterion="entropy"),
+                   n_estimators=10, learning_rate=0.3)
+
+c = VotingClassifier(
+    estimators=[('dt', clf1), ('b', clf3), ('gb4', clf4), ('gb2', clf2), ('gb5', clf5), ('ab', clf6)],
+    voting='soft'
+)
 
 trainData = Data()
 data = trainData.readTrainData()
 
-trainData.predict(classifier=classifiers[5], name='ExtraTrees', para=0.841, i='3')
+trainData.predict(classifier=c, name='Voting', para=1, i='1')
