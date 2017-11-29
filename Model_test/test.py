@@ -1,48 +1,31 @@
 from Data import Data
 from sklearn.model_selection import train_test_split
-
 from sklearn.ensemble import AdaBoostClassifier, BaggingClassifier, \
                              ExtraTreesClassifier, GradientBoostingClassifier, \
                              RandomForestClassifier, VotingClassifier
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.linear_model import PassiveAggressiveClassifier, \
-                                 RidgeClassifier, SGDClassifier
-from sklearn.naive_bayes import BernoulliNB, GaussianNB
-from sklearn.neighbors import KNeighborsClassifier, RadiusNeighborsClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 classifier = [
     (
         'ab',
          AdaBoostClassifier(
             base_estimator=DecisionTreeClassifier(max_depth=7, criterion="entropy"),
-            n_estimators=10, learning_rate=0.3)
-    ),
+            n_estimators=10, learning_rate=0.25)
+    ),      # 0.8319
     (
         'b',
-        BaggingClassifier(n_estimators=35)
-    ),
-    (
-        'et',
-        ExtraTreeClassifier()
-    ),
+        BaggingClassifier(
+            base_estimator=DecisionTreeClassifier(max_depth=20, criterion="entropy"),
+            n_estimators=35)
+    ),      # 0.8337
     (
         'gb3',
         GradientBoostingClassifier(learning_rate=0.4, n_estimators=110, max_depth=3)
-    ),
+    ),      # 0.8457
     (
         'gb4',
         GradientBoostingClassifier(learning_rate=0.4, n_estimators=110, max_depth=4)
-    ),
-    (
-        'gb5',
-        GradientBoostingClassifier(learning_rate=0.4, n_estimators=110, max_depth=5)
-    ),
-    (
-        'dt',
-        DecisionTreeClassifier(max_depth=10, criterion="entropy")
-    )
+    ),      # 0.8464
 ]
 
 d = Data()
@@ -50,10 +33,10 @@ d.readTrainData()
 
 c = VotingClassifier(
     estimators=classifier,
-    voting='soft'
+    voting='soft',
+    weights=[0.8319,0.8337,0.8457,0.8464]
 )
-# c = classifier[3][1]
-iteration = 3
+iteration = 2
 
 total = 0
 for _ in range(iteration):
