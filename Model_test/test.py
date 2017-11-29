@@ -34,7 +34,7 @@ d.readTrainData()
 c = VotingClassifier(
     estimators=classifier,
     voting='soft',
-    weights=[0.8319,0.8337,0.8457,0.8464]
+    weights=[0.8319,0.8337,0.8464]
 )
 iteration = 2
 

@@ -1,7 +1,6 @@
 from Data import Data
 from sklearn.ensemble import AdaBoostClassifier, BaggingClassifier, \
-                             ExtraTreesClassifier, GradientBoostingClassifier, \
-                             RandomForestClassifier, VotingClassifier
+                             GradientBoostingClassifier, VotingClassifier
 from sklearn.tree import DecisionTreeClassifier
 
 classifier = [
