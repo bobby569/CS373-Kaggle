@@ -6,8 +6,8 @@ import numpy as np
 import csv
 import datetime
 
-def getInteger(s, default=0):
-    return int(float(s)) if s else default
+def getDecimal(s, default=0):
+    return float(s) if s else default
 
 def getPercentage(s, default=0.):
     return float(s[:-1]) if s else default
@@ -71,12 +71,13 @@ classifiers = [
     (
         'gb5',
         GradientBoostingClassifier(learning_rate=0.4, n_estimators=110, max_depth=5)
-    )
+    )       # 0.8376
 ]
 
 clf = VotingClassifier(
     estimators=classifiers,
-    voting='soft'
+    voting='soft',
+    weights=[0.8319,0.8337,0.8457,0.8464,0.8376]
 )
 
 data = []
@@ -84,37 +85,35 @@ trainfile = open('./Loan_Training.csv')
 reader = csv.DictReader(trainfile)
 
 for row in reader:
-    if getInteger(row['Monthly Income']) > 200000 or \
+    if getDecimal(row['Monthly Income']) > 200000 or \
         getCreditTime(row['Earliest CREDIT Line']) < 0 or \
-        getInteger(row['Open CREDIT Lines']) > 40 or \
-        getInteger(row['Total CREDIT Lines']) > 84 or \
-        getInteger(row['Revolving CREDIT Balance']) > 700000 or \
+        getDecimal(row['Open CREDIT Lines']) > 40 or \
+        getDecimal(row['Total CREDIT Lines']) > 84 or \
+        getDecimal(row['Revolving CREDIT Balance']) > 700000 or \
         getPercentage(row['Revolving Line Utilization'], 0.) > 110 or \
-        getInteger(row['Inquiries in the Last 6 Months'], -1) > 22 or \
-        getInteger(row['Delinquent Amount'], -1) > 1000:
+        getDecimal(row['Inquiries in the Last 6 Months'], -1) > 22:
         continue
 
     obj = np.array([
-        getInteger(row['Amount Requested']),
-        getInteger(row['Amount Funded By Investors']),
+        getDecimal(row['Amount Requested']),
+        getDecimal(row['Amount Funded By Investors']),
         getPercentage(row['Interest Rate']),
         getLoanLen(row['Loan Length']),
         getCreditGrade(row['CREDIT Grade']),
-        getInteger(row['Monthly PAYMENT']),
-        getInteger(row['Total Amount Funded']),
+        getDecimal(row['Monthly PAYMENT']),
+        getDecimal(row['Total Amount Funded']),
         getPercentage(row['Debt-To-Income Ratio']),
-        getInteger(row['Monthly Income']),
+        getDecimal(row['Monthly Income']),
         getFICOScore(row['FICO Range']),
         getCreditTime(row['Earliest CREDIT Line']),
-        getInteger(row['Open CREDIT Lines']),
-        getInteger(row['Total CREDIT Lines']),
-        getInteger(row['Revolving CREDIT Balance']),
+        getDecimal(row['Open CREDIT Lines']),
+        getDecimal(row['Total CREDIT Lines']),
+        getDecimal(row['Revolving CREDIT Balance']),
         # getPercentage(row['Revolving Line Utilization'], 0.),
-        getInteger(row['Inquiries in the Last 6 Months'], -1),
-        getInteger(row['Accounts Now Delinquent'], -1),
-        # getInteger(row['Delinquent Amount'], -1),
-        getInteger(row['Months Since Last Delinquency'], -1),
-        # getInteger(row['Public Records On File'], -1),
+        getDecimal(row['Inquiries in the Last 6 Months'], -1),
+        getDecimal(row['Accounts Now Delinquent'], -1),
+        getDecimal(row['Months Since Last Delinquency'], -1),
+        # getDecimal(row['Public Records On File'], -1),
         getEducation(row['Education']),
         getEmployeement(row['Employment Length']),
         row['Status (Fully Paid=1, Not Paid=0)']
@@ -136,26 +135,25 @@ writer.writerow(['Loan ID', 'Status (Fully Paid=1, Not Paid=0)'])
 
 for row in reader:
     test = np.array([[
-        getInteger(row['Amount Requested']),
-        getInteger(row['Amount Funded By Investors']),
+        getDecimal(row['Amount Requested']),
+        getDecimal(row['Amount Funded By Investors']),
         getPercentage(row['Interest Rate']),
         getLoanLen(row['Loan Length']),
         getCreditGrade(row['CREDIT Grade']),
-        getInteger(row['Monthly PAYMENT']),
-        getInteger(row['Total Amount Funded']),
+        getDecimal(row['Monthly PAYMENT']),
+        getDecimal(row['Total Amount Funded']),
         getPercentage(row['Debt-To-Income Ratio']),
-        getInteger(row['Monthly Income']),
+        getDecimal(row['Monthly Income']),
         getFICOScore(row['FICO Range']),
         getCreditTime(row['Earliest CREDIT Line']),
-        getInteger(row['Open CREDIT Lines']),
-        getInteger(row['Total CREDIT Lines']),
-        getInteger(row['Revolving CREDIT Balance']),
-        getPercentage(row['Revolving Line Utilization'], 0.),
-        getInteger(row['Inquiries in the Last 6 Months'], -1),
-        getInteger(row['Accounts Now Delinquent'], -1),
-        getInteger(row['Delinquent Amount'], -1),
-        getInteger(row['Months Since Last Delinquency'], -1),
-        getInteger(row['Public Records On File'], -1),
+        getDecimal(row['Open CREDIT Lines']),
+        getDecimal(row['Total CREDIT Lines']),
+        getDecimal(row['Revolving CREDIT Balance']),
+        # getPercentage(row['Revolving Line Utilization'], 0.),
+        getDecimal(row['Inquiries in the Last 6 Months'], -1),
+        getDecimal(row['Accounts Now Delinquent'], -1),
+        getDecimal(row['Months Since Last Delinquency'], -1),
+        # getDecimal(row['Public Records On File'], -1),
         getEducation(row['Education']),
         getEmployeement(row['Employment Length']),
     ]])

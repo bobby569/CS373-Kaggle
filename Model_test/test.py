@@ -26,6 +26,10 @@ classifier = [
         'gb4',
         GradientBoostingClassifier(learning_rate=0.4, n_estimators=110, max_depth=4)
     ),      # 0.8464
+    (
+        'gb5',
+        GradientBoostingClassifier(learning_rate=0.4, n_estimators=110, max_depth=5)
+    )       # 0.8376
 ]
 
 d = Data()
@@ -34,15 +38,17 @@ d.readTrainData()
 c = VotingClassifier(
     estimators=classifier,
     voting='soft',
-    weights=[0.8319,0.8337,0.8464]
+    weights=[0.8319,0.8337,0.8457,0.8464,0.8376]
 )
+
 iteration = 2
 
 total = 0
 for _ in range(iteration):
-    X_train, X_test, y_train, y_test = train_test_split(d.attr, d.target, test_size=0.3, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(d.attr, d.target, test_size=0.3)
     c.fit(X_train, y_train)
     score = c.score(X_test, y_test)
+    print score
     total += score
 
 print "%.4f" % (total / iteration)

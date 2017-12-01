@@ -1,7 +1,7 @@
 import datetime
 
-def getInteger(s, default=0):
-    return int(float(s)) if s else default
+def getDecimal(s, default=0):
+    return float(s) if s else default
 
 def getPercentage(s, default=0.):
     return float(s[:-1]) if s else default
